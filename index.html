@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gmail Creator Pro — أداة إنشاء حسابات Gmail تلقائيًا</title>
+<meta name="description" content="Gmail Creator Pro v2.0.0 — أداة إنشاء حسابات Gmail تلقائيًا: نظام مضاد للكشف، تجاوز التحقق برقم الهاتف، تكامل 5sim، واجهة عصرية.">
+<style>
+  :root{
+    --bg:#05070d;
+    --panel:#0a0f1c;
+    --panel2:#0d1424;
+    --line:#1c2b4a;
+    --blue:#4da3ff;
+    --blue2:#1e6fd9;
+    --amber:#ffc21a;
+    --green:#23d18b;
+    --text:#dbe6f5;
+    --dim:#8ea3c0;
+    --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Segoe UI",Tahoma,Arial,sans-serif;
+    line-height:1.85;
+    background-image:
+      radial-gradient(1000px 500px at 80% -10%, rgba(30,111,217,.18), transparent 60%),
+      radial-gradient(800px 400px at 10% 110%, rgba(255,194,26,.06), transparent 60%);
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ---------- header ---------- */
+  header{
+    border-bottom:1px solid var(--line);
+    background:rgba(7,11,20,.85);
+    position:sticky;top:0;z-index:10;
+    backdrop-filter:blur(8px);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:#fff}
+  .brand img{width:26px;height:26px;border-radius:6px}
+  .brand span b{color:var(--blue)}
+  .nav-links{display:flex;gap:18px;font-size:14px;color:var(--dim)}
+  .nav-links a{color:var(--dim)}
+  .nav-links a:hover{color:var(--blue);text-decoration:none}
+  @media(max-width:720px){.nav-links{display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 40px;text-align:center}
+  .badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+  .badge{
+    font-size:12.5px;padding:4px 12px;border-radius:999px;
+    border:1px solid var(--line);color:var(--dim);background:var(--panel);
+  }
+  .badge.hot{border-color:rgba(255,194,26,.4);color:var(--amber)}
+  .badge.ok{border-color:rgba(35,209,139,.4);color:var(--green)}
+  .hero h1{
+    font-size:clamp(30px,5.2vw,54px);
+    line-height:1.25;color:#fff;letter-spacing:.5px;
+    text-shadow:0 0 34px rgba(77,163,255,.35);
+  }
+  .hero h1 .pro{color:var(--blue)}
+  .hero p.sub{color:var(--dim);font-size:17px;max-width:640px;margin:14px auto 0}
+  .hero .tagline{color:var(--amber);font-size:14px;margin-top:10px}
+
+  .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 30px;border-radius:var(--radius);
+    font-size:16px;font-weight:700;border:1px solid transparent;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn:hover{transform:translateY(-2px);text-decoration:none}
+  .btn-main{
+    background:linear-gradient(180deg,#2b8bff,#1e6fd9);color:#fff;
+    box-shadow:0 10px 30px rgba(30,111,217,.35);
+  }
+  .btn-main:hover{box-shadow:0 14px 40px rgba(30,111,217,.5)}
+  .btn-ghost{background:var(--panel);color:var(--text);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--blue)}
+  .btn small{font-weight:400;font-size:12px;opacity:.85;display:block;line-height:1.2}
+
+  .hero-note{margin-top:16px;font-size:13px;color:var(--dim)}
+
+  /* ---------- sections ---------- */
+  section{padding:56px 0}
+  section.alt{background:linear-gradient(180deg,transparent,rgba(13,20,36,.6),transparent)}
+  .sec-head{text-align:center;margin-bottom:38px}
+  .sec-head h2{font-size:clamp(22px,3.4vw,32px);color:#fff}
+  .sec-head h2 i{color:var(--blue);font-style:normal}
+  .sec-head p{color:var(--dim);margin-top:8px;font-size:15px}
+
+  /* ---------- shots ---------- */
+  .shots{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.shots{grid-template-columns:1fr}}
+  .shot{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .shot img{width:100%;display:block}
+  .shot figcaption{padding:10px 14px;font-size:13px;color:var(--dim);border-top:1px solid var(--line)}
+
+  /* ---------- features ---------- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.grid{grid-template-columns:1fr}}
+  .card{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--radius);padding:22px 20px;
+  }
+  .card .ic{font-size:24px;line-height:1;display:block;margin-bottom:12px}
+  .card h3{color:#fff;font-size:16.5px;margin-bottom:8px}
+  .card p{color:var(--dim);font-size:14px}
+
+  /* ---------- steps ---------- */
+  .steps{display:grid;gap:14px;max-width:820px;margin:0 auto}
+  .step{
+    display:grid;grid-template-columns:46px 1fr;gap:16px;align-items:start;
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--radius);padding:18px 20px;
+  }
+  .step .n{
+    width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    background:rgba(30,111,217,.18);border:1px solid var(--line);
+    color:var(--blue);font-weight:800;font-size:19px;
+  }
+  .step h3{color:#fff;font-size:16px;margin-bottom:4px}
+  .step p{color:var(--dim);font-size:14px}
+  pre{
+    direction:ltr;text-align:left;
+    background:#070b14;border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;margin-top:10px;overflow-x:auto;
+    font-family:Consolas,"Courier New",monospace;font-size:13.5px;color:#bcd3f2;
+  }
+  pre .c{color:#5f7ba1}
+  pre .g{color:var(--green)}
+  code.inline{
+    direction:ltr;display:inline-block;
+    background:#070b14;border:1px solid var(--line);border-radius:6px;
+    padding:1px 8px;font-family:Consolas,monospace;font-size:13px;color:var(--amber);
+  }
+
+  /* ---------- config table ---------- */
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel)}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+  th,td{padding:12px 16px;text-align:right;border-bottom:1px solid var(--line)}
+  th{background:var(--panel2);color:#fff;font-size:13.5px}
+  tr:last-child td{border-bottom:none}
+  td{color:var(--dim)}
+  td.f{direction:ltr;text-align:left;font-family:Consolas,monospace;color:var(--amber);font-size:13px;white-space:nowrap}
+
+  /* ---------- reqs ---------- */
+  .reqs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .req{
+    background:var(--panel);border:1px solid var(--line);border-radius:999px;
+    padding:8px 18px;font-size:13.5px;color:var(--dim);
+  }
+  .req b{color:var(--text);font-weight:600}
+
+  /* ---------- video ---------- */
+  .player{
+    max-width:860px;margin:0 auto;
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .player video{width:100%;display:block;background:#000;aspect-ratio:16/9}
+  .player figcaption{padding:12px 18px;font-size:13.5px;color:var(--dim);border-top:1px solid var(--line)}
+
+  /* ---------- activation steps ---------- */
+  .act{display:grid;gap:14px;max-width:820px;margin:26px auto 0}
+  .act-item{
+    display:grid;grid-template-columns:46px 1fr;gap:16px;align-items:start;
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--radius);padding:16px 20px;
+  }
+  .act-item .n{
+    width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    background:rgba(255,194,26,.12);border:1px solid rgba(255,194,26,.3);
+    color:var(--amber);font-weight:800;font-size:19px;
+  }
+  .act-item h4{color:#fff;font-size:15.5px;margin-bottom:3px}
+  .act-item p{color:var(--dim);font-size:14px}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding:38px 0 44px;text-align:center}
+  footer .copy{color:var(--dim);font-size:13px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <img src="assets/gmail.png" alt="Gmail Creator Pro">
+      <span>Gmail <b>Creator Pro</b></span>
+    </div>
+    <nav class="nav-links">
+      <a href="#shots">صور</a>
+      <a href="#features">المميزات</a>
+      <a href="#start">التركيب</a>
+      <a href="#config">الإعدادات</a>
+      <a href="#video">شرح</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<div class="wrap hero">
+  <div class="badges">
+    <span class="badge hot">الإصدار 2.0.0</span>
+    <span class="badge ok">Windows 10/11</span>
+    <span class="badge">Python 3.8+</span>
+    <span class="badge">واجهة عربية / إنجليزية</span>
+  </div>
+
+  <h1>Gmail Creator <span class="pro">Pro</span></h1>
+  <p class="sub">أداة إنشاء حسابات Gmail تلقائيًا — نظام مضاد للكشف، تجاوز التحقق برقم الهاتف مع تكامل 5sim، دعم بروكسي، وواجهة طرفية عصرية بإحصائيات لحظية.</p>
+  <p class="tagline">✨ Advanced Anti-Detection • Phone Verification Bypass • 5sim Integration ✨</p>
+
+  <div class="cta">
+    <a class="btn btn-main" href="assets/GmailCreatorPro.exe" download>
+      ⬇ تحميل الأداة
+      <small>auto_gmail_creator.exe — نسخة جاهزة ~50MB</small>
+    </a>
+    <a class="btn btn-ghost" href="#start">طريقة التشغيل</a>
+  </div>
+  <p class="hero-note">شغّل الملف مباشرة على Windows — أو اتبع خطوات التركيب لاستخدام نسخة Python.</p>
+</div>
+
+<!-- ================= SHOTS ================= -->
+<section class="alt" id="shots">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>واجهة <i>الأداة</i></h2>
+      <p>شاشة البداية والقائمة الرئيسية داخل التطبيق</p>
+    </div>
+    <div class="shots">
+      <figure class="shot">
+        <img src="assets/gmail.png" alt="واجهة Gmail Creator Pro">
+        <figcaption>شاشة الترحيب والقائمة الرئيسية — Gmail Creator Pro v2.0.0</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="assets/gmail2.png" alt="Menu Options">
+        <figcaption>قائمة الخيارات — إنشاء حسابات، إحصائيات، إعدادات، حفظ الحسابات</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>أهم <i>المميزات</i></h2>
+      <p>كل ما تحتاجه لإنشاء الحسابات بشكل تلقائي ومستقر</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <span class="ic">🛡️</span>
+        <h3>نظام مضاد للكشف</h3>
+        <p>محاكاة كتابة بشرية بتأخيرات عشوائية، تسخين الجلسة بزيارة مواقع موثوقة، تدوير User-Agents مختلف لكل حساب.</p>
+      </div>
+      <div class="card">
+        <span class="ic">🔒</span>
+        <h3>تجاوز التحقق برقم الهاتف</h3>
+        <p>استراتيجيات تخطي متعددة، اكتشاف زر "طريقة أخرى"، وتكامل كامل مع 5sim لشراء الأرقام واستلام كود SMS تلقائيًا.</p>
+      </div>
+      <div class="card">
+        <span class="ic">🌐</span>
+        <h3>دعم البروكسي</h3>
+        <p>تكامل FreeProxy لتدوير عنوان IP، اختيار بروكسي عشوائي لكل حساب، والتحقق من صلاحيته قبل الاستخدام.</p>
+      </div>
+      <div class="card">
+        <span class="ic">💻</span>
+        <h3>واجهة عصرية</h3>
+        <p>واجهة طرفية ملوّنة مع أشرطة تقدم لحظية، قائمة تفاعلية، ورسائل واضحة بالألوان لكل حالة.</p>
+      </div>
+      <div class="card">
+        <span class="ic">📊</span>
+        <h3>إحصائيات مفصلة</h3>
+        <p>عدد الحسابات المنشأة، الحسابات النشطة، نسبة النجاح، وآخر وقت إنشاء — كل شيء أمامك مباشرة.</p>
+      </div>
+      <div class="card">
+        <span class="ic">💾</span>
+        <h3>حفظ تلقائي للحسابات</h3>
+        <p>كل حساب يُحفظ فورًا بصيغة JSON مع بياناته الكاملة: البريد، كلمة المرور، تاريخ الإنشاء، والحالة.</p>
+      </div>
+      <div class="card">
+        <span class="ic">🔄</span>
+        <h3>إعادة محاولة تلقائية</h3>
+        <p>معالجة أخطاء قوية، محاولات متعددة عند الفشل، بدائل ذكية لكل خطوة، وتحميل صفحة بإعادة المحاولة.</p>
+      </div>
+      <div class="card">
+        <span class="ic">⚡</span>
+        <h3>سرعة في الإنشاء</h3>
+        <p>كود محسّن لتنفيذ سريع، استخدام موارد منخفض، وتشغيل ChromeDriver سريع مع إدارة تلقائية للإصدار.</p>
+      </div>
+      <div class="card">
+        <span class="ic">🔐</span>
+        <h3>إعدادات آمنة</h3>
+        <p>ملفات إعدادات منفصلة: كلمة المرور، مفتاح 5sim، أسماء المستخدمين — بدون أي بيانات مكتوبة داخل الكود.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUICK START ================= -->
+<section class="alt" id="start">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>التركيب في <i>خطوات</i></h2>
+      <p>من الصفر إلى أول حساب — 4 خطوات فقط</p>
+    </div>
+    <div class="steps">
+
+      <div class="step">
+        <div class="n">1</div>
+        <div>
+          <h3>حمّل الأداة</h3>
+          <p>نزّل الملف التنفيذي من الزر في الأعلى وشغّله مباشرة، أو استخدم نسخة Python من المستودع.</p>
+          <pre><span class="c"># نسخة Python من المستودع</span>
+git clone https://github.com/ShadowHackrs/gmail-account-creator.git
+cd Gmail2025</pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="n">2</div>
+        <div>
+          <h3>ثبّت المكتبات (لنسخة Python)</h3>
+          <p>كل المكتبات المطلوبة موجودة في ملف requirements.txt — أمر واحد وينتهي الأمر.</p>
+          <pre>pip install -r requirements.txt</pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="n">3</div>
+        <div>
+          <h3>اضبط الإعدادات</h3>
+          <p>عدّل الملفات داخل مجلد الإعدادات: كلمة المرور، الأسماء، ومفتاح 5sim.</p>
+          <pre><span class="c"># كلمة المرور</span>
+config/password.txt
+<span class="c"># الأسماء المستخدمة في الحسابات</span>
+data/names.txt
+<span class="c"># مفتاح 5sim للتحقق برقم الهاتف</span>
+config/5sim_config.txt</pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="n">4</div>
+        <div>
+          <h3>شغّل الأداة</h3>
+          <p>اختر "Create Gmail Accounts" من القائمة وحدّد عدد الحسابات — والباقي يتم تلقائيًا.</p>
+          <pre><span class="g">python auto_gmail_creator.py</span></pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONFIG ================= -->
+<section id="config">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>ملفات <i>الإعدادات</i></h2>
+      <p>كل ما يخص التشغيل في مكان واحد</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>الملف</th><th>الوظيفة</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="f">config/password.txt</td>
+            <td>كلمة المرور التي تُستخدم للحسابات الجديدة — 8 أحرف على الأقل مع رموز وأرقام.</td>
+          </tr>
+          <tr>
+            <td class="f">config/5sim_config.txt</td>
+            <td>مفتاح API الخاص بـ 5sim لشراء رقم هاتف واستلام كود التفعيل تلقائيًا.</td>
+          </tr>
+          <tr>
+            <td class="f">config/user_agents.txt</td>
+            <td>قائمة User-Agents للتدوير — كل حساب يظهر كمتصفح مختلف.</td>
+          </tr>
+          <tr>
+            <td class="f">config/config.py</td>
+            <td>الإعدادات العامة: تاريخ الميلاد، الجنس، بلد ومشغّل 5sim، ملف الأسماء.</td>
+          </tr>
+          <tr>
+            <td class="f">data/names.txt</td>
+            <td>قائمة الأسماء — اسم في كل سطر، تُستخدم عشوائيًا في الحسابات.</td>
+          </tr>
+          <tr>
+            <td class="f">data/accounts.json</td>
+            <td>ملف الحسابات المُنشأة — يتولّد تلقائيًا بعد كل عملية إنشاء.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REQUIREMENTS ================= -->
+<section class="alt" id="reqs">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>المتطلبات</h2>
+      <p>جهّز هذه الأشياء قبل التشغيل</p>
+    </div>
+    <div class="reqs">
+      <span class="req"><b>نظام:</b> Windows 10 / 11</span>
+      <span class="req"><b>Python:</b> 3.8+ (يُفضّل 3.12)</span>
+      <span class="req"><b>متصفح:</b> Chrome أحدث إصدار</span>
+      <span class="req"><b>رام:</b> 4GB حد أدنى — 8GB مفضّل</span>
+      <span class="req"><b>إنترنت:</b> اتصال مستقر</span>
+      <span class="req"><b>مفاتيح:</b> 5sim API (اختياري لكن موصى به)</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACTIVATION / USAGE ================= -->
+<section id="video">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>شرح <i>التفعيل</i> والتشغيل</h2>
+      <p>فيديو تفعيل الأداة خطوة بخطوة — من التحميل حتى إنشاء أول حساب</p>
+    </div>
+
+    <figure class="player">
+      <video controls preload="metadata" poster="assets/poster.jpg">
+        <source src="assets/video.mp4" type="video/mp4">
+        متصفحك لا يدعم تشغيل الفيديو.
+      </video>
+      <figcaption>طريقة التفعيل الكاملة — تشغيل الأداة وضبط الإعدادات وإنشاء الحسابات</figcaption>
+    </figure>
+
+    <div class="act">
+      <div class="act-item">
+        <div class="n">1</div>
+        <div>
+          <h4>تحميل الأداة وفك الضغط</h4>
+          <p>نزّل الأداة من زر التحميل في الأعلى، ثم فك ضغط المجلد وضعه في أي مكان على الجهاز.</p>
+        </div>
+      </div>
+      <div class="act-item">
+        <div class="n">2</div>
+        <div>
+          <h4>تشغيل الملف التنفيذي</h4>
+          <p>افتح الملف <code class="inline">auto_gmail_creator.exe</code> — ستظهر واجهة الأداة والقائمة الرئيسية مباشرة بدون أي تنصيب إضافي.</p>
+        </div>
+      </div>
+      <div class="act-item">
+        <div class="n">3</div>
+        <div>
+          <h4>اختيار إنشاء الحسابات</h4>
+          <p>من القائمة اختر <code class="inline">1</code> لإنشاء حسابات Gmail، ثم حدّد عدد الحسابات المطلوبة.</p>
+        </div>
+      </div>
+      <div class="act-item">
+        <div class="n">4</div>
+        <div>
+          <h4>إدخال البيانات الأساسية</h4>
+          <p>يكمل المتصفح الطريق تلقائيًا: الاسم ويوم الميلاد والجنس وكلمة المرور — ثم صفحة التحقق من Google.</p>
+        </div>
+      </div>
+      <div class="act-item">
+        <div class="n">5</div>
+        <div>
+          <h4>التحقق من الحساب</h4>
+          <p>عند ظهور صفحة التحقق، امسح كود QR من هاتفك لإكمال التفعيل، والحساب يُحفظ تلقائيًا بعد الإنشاء.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="copy">© 2025 Shadow Hackrs — All Rights Reserved • Gmail Creator Pro v2.0.0</p>
+    <p class="copy" style="margin-top:6px">الأداة من صنع ShadowHackrs</p>
+  </div>
+</footer>
+
+</body>
+</html>
